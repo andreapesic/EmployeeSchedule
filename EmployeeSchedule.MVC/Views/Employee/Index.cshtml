@@ -1,0 +1,134 @@
+﻿@model IEnumerable<EmployeeSchedule.MVC.Models.ViewModel.EmployeeViewModel>
+
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<div class="base">
+    <div class="row">
+        <div class="col-sm-6 ">
+            <input type="text" class="form-control" id="employeeSearchText" />
+        </div>
+        <div class="col-sm-6">
+            <select id="employeeSortCriteria" name="SortEmployees" class="form-control">
+                <option value="Name">Name</option>
+                <option value="Surname">Surname</option>
+                <option value="Email">Email</option>
+                <option value="Possition">Possition</option>
+                <option value="Company">Company</option>
+            </select>
+        </div>
+    </div>
+    <div class="row buttons-index">
+        <div class="col-sm-3">
+            <input id="employeeSearch" width="100" type="button" value="Search" class="btn btn-outline-info" />
+        </div>
+        <div class="col-sm-3">
+            @*<input width="100" type="button" value="Reset" class="btn btn-outline-info" />*@
+            <a class="btn btn-outline-info" asp-action="Index">Reset</a>
+            @*        <a asp-controller="Employee" asp-action="Index" width="100" value="Reset" class="btn btn-outline-primary" />*@
+        </div>
+        <div class="col-sm-3">
+            <a asp-action="Create" class="btn btn-outline-info">Create</a>
+        </div>
+
+        <div class="col-sm-3">
+            <input id="employeeSort" type="button" width="100" value="Sort" class="btn btn-outline-info" />
+        </div>
+    </div>
+    @if (TempData["DeleteError"] != null)
+    {
+        @if ((bool)TempData["DeleteError"])
+        {
+            <div class="alert alert-warning" role="alert" style="margin-top:1%; width:50%">
+                Delete error
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert" style="margin-top:1%; width:50%">
+                Success delete
+            </div>
+        }
+    }
+       
+    <div class="table-responsive table-base">
+        <table class="table">
+            <thead class="table-head">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Surname)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Adress)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Number)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Password)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Possition)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Company)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CityName)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="employeeResultInsert" class="table-body">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Surname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Adress)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Number)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Password)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Possition)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Company.Name)
+                        </td>
+                        <th>
+                            @Html.DisplayFor(modelItem => item.CityName)
+                        </th>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-light">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-success">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/index.css" />
+}

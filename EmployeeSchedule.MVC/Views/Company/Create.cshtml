@@ -1,0 +1,59 @@
+﻿@model EmployeeSchedule.MVC.Models.Create.CompanyCreate
+
+@{
+    ViewData["Title"] = "Create company";
+}
+
+<div class="base">
+    <div class="row">
+        <div class="col-md-6 title">
+            <h1>Create company</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-controller="Company" method="post" asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdentificationNumber" class="control-label"></label>
+                    <input asp-for="IdentificationNumber" class="form-control" />
+                    <span asp-validation-for="IdentificationNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Adress" class="control-label"></label>
+                    <input asp-for="Adress" class="form-control" />
+                    <span asp-validation-for="Adress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Domain" class="control-label"></label>
+                    <input asp-for="Domain" class="form-control" />
+                    <span asp-validation-for="Domain" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <a asp-action="Index" class="btn btn-outline-info">Back to List</a>
+                    <input type="submit" value="Create" class="btn btn-info" />
+                </div>
+                @if (!string.IsNullOrEmpty(@Model.ValidationMessage))
+                {
+                    <div class="alert alert-info" role="alert">
+                        @Model.ValidationMessage
+                    </div>
+                }
+            </form>
+        </div>
+    </div>
+
+</div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+
+    @section Styles {
+        <link rel="stylesheet" href="~/css/create.css" />
+    }

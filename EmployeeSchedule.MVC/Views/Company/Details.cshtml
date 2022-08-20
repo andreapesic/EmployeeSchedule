@@ -1,0 +1,48 @@
+﻿@model EmployeeSchedule.MVC.Models.Create.CompanyCreate
+@using EmployeeSchedule.MVC.Session
+
+<div class="base">
+    <div class="row">
+        <div class="col-md-6 title">
+            <h1>Company</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 title">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @Html.DisplayNameFor(model => model.Name)
+                    <span class="badge badge-info badge-pill">@Html.DisplayFor(model => model.Name)</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @Html.DisplayNameFor(model => model.IdentificationNumber)
+                    <span class="badge badge-info badge-pill">@Html.DisplayFor(model => model.IdentificationNumber)</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @Html.DisplayNameFor(model => model.Adress)
+                    <span class="badge badge-info badge-pill">@Html.DisplayFor(model => model.Adress)</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @Html.DisplayNameFor(model => model.Domain)
+                    <span class="badge badge-info badge-pill">@Html.DisplayFor(model => model.Domain)</span>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <a asp-action="Index" class="btn btn-outline-info">Back to List</a>
+            @if (Storage.Instance.IsAdmin == LoginCurrentRole.Admin)
+            {
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-info">Edit</a>
+            }
+            </div>
+        <div class="col-md-6">
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/details.css" />
+}

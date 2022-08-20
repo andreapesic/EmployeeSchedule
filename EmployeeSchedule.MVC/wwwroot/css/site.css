@@ -1,0 +1,19 @@
+﻿html {
+    height: 100%;
+    background-color: #474B4F;
+}
+
+body {
+    min-height: 100%;
+    background-color: #474B4F;
+}
+
+.base-helper {
+    height: 400px;
+    background-color: #474B4F;
+}
+
+
+.navbar-expand-sm {
+    margin-left: 10%;
+}

@@ -1,0 +1,90 @@
+﻿@using EmployeeSchedule.MVC.Session
+
+<!DOCTYPE html>
+<html lang="en">
+<head style="        height: 100%;
+        background-color: #474B4F
+">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @*<link rel="stylesheet" href="~/css/site.css" />*@
+</head>
+<body style="        min-height: 100%;
+        background-color: #474B4F; 
+       
+">
+    <header>
+        @if (Storage.Instance.IsAdmin == LoginCurrentRole.No)
+        {
+
+        }
+        else if (Storage.Instance.IsAdmin == LoginCurrentRole.Admin)
+        {
+            <nav class="navbar navbar-expand-sm" style="background-color: #6B6E70;border-bottom:2px solid #61892F">
+                <div class="container">
+                    <div class="navbar-collapse" style="text-align:center; margin-left:20%">
+                        <ul class="nav justify-content-center navbar-list" style="color:#86C232; font-size:20px;">
+                            <li class="nav-item" style="color:#86C232">
+                                <a class="nav-link" style="color:#86C232;text-transform:uppercase" asp-area="" asp-controller="Employee" asp-action="Index">Employee</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="color:#86C232;text-transform:uppercase" asp-area="" asp-controller="Schedule" asp-action="Index">Schedule</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="color:#86C232;text-transform:uppercase" asp-area="" asp-controller="Company" asp-action="Index">Company</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="color:#86C232;text-transform:uppercase" asp-area="" asp-controller="Employee" asp-action="Details" asp-route-id="@Storage.Instance.LoginEmployee.Id">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="color:#86C232;text-transform:uppercase" asp-area="" asp-controller="Employee" asp-action="Login">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        }
+        else
+        {
+            <nav class="navbar navbar-expand-sm" style="background-color: #6B6E70;border-bottom:2px solid #61892F">
+                <div class="container">
+                    <div class="navbar-collapse" style="text-align:center; margin-left:20%">
+                        <ul class="nav justify-content-center navbar-list" style="color:#86C232; font-size:20px;">
+                            <li class="nav-item">
+                                <a class="nav-link" style="color:#86C232;text-transform:uppercase" asp-area="" asp-controller="Schedule" asp-action="Index">Schedule</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="color:#86C232;text-transform:uppercase" asp-area="" asp-controller="Company" asp-action="Details" asp-route-id="@Storage.Instance.LoginEmployee.Company.Id">Company</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="color:#86C232;text-transform:uppercase" asp-area="" asp-controller="Employee" asp-action="Details" asp-route-id="@Storage.Instance.LoginEmployee.Id">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="color:#86C232;text-transform:uppercase" asp-area="" asp-controller="Employee" asp-action="Login">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        }
+    </header>
+    <main role="main">
+        @RenderBody()
+        <div class="base-helper">
+
+        </div>
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("Styles", required: false)
+</body>
+</html>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/site.css" />
+}

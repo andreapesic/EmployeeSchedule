@@ -1,0 +1,87 @@
+﻿@model EmployeeSchedule.MVC.Models.Create.EmployeeCreate
+
+@{
+    ViewData["Title"] = "Edit company";
+}
+<div class="base">
+    <div class="row">
+        <div class="col-md-6 title">
+            <h1>Edit employee</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Surname" class="control-label"></label>
+                    <input asp-for="Surname" class="form-control" />
+                    <span asp-validation-for="Surname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Adress" class="control-label"></label>
+                    <input asp-for="Adress" class="form-control" />
+                    <span asp-validation-for="Adress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Number" class="control-label"></label>
+                    <input asp-for="Number" class="form-control" />
+                    <span asp-validation-for="Number" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Possition" class="control-label"></label>
+                    <input asp-for="Possition" class="form-control" />
+                    <span asp-validation-for="Possition" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Company" class="control-label"></label>
+                    <select asp-for="Company.Id" asp-items="@Model.CompaniesSelectList" class="form-control">
+                    </select>
+                    <span asp-validation-for="Company" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CityName" class="control-label"></label>
+                    <select asp-for="CityName" asp-items="@Model.CitiesSelectList" class="form-control">
+                    </select>
+                    <span asp-validation-for="CityName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <a asp-action="Index" class="btn btn-outline-info">Back to List</a>
+                    <input type="submit" value="Edit" class="btn btn-info" />
+                </div>
+                @if (!string.IsNullOrEmpty(@Model.ValidationMessage))
+                {
+                    <div class="alert alert-info" role="alert">
+                        @Model.ValidationMessage
+                    </div>
+                }
+            </form>
+        </div>
+    </div>
+
+</div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+
+
+    @section Styles {
+        <link rel="stylesheet" href="~/css/create.css" />
+    }

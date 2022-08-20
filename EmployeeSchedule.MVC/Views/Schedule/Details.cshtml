@@ -1,0 +1,62 @@
+﻿@model EmployeeSchedule.MVC.Models.Create.ScheduleCreate
+@using EmployeeSchedule.MVC.Session
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="base">
+    <div class="row">
+        <div class="col-md-6 title">
+            <h1>Schedule</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 title">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @Html.DisplayNameFor(model => model.Employee)
+                    <span class="badge badge-info badge-pill">@Html.DisplayFor(model => model.Employee.Name) @Html.DisplayFor(model => model.Employee.Surname)</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @Html.DisplayNameFor(model => model.Date)
+                    <span class="badge badge-info badge-pill">@Html.DisplayFor(model => model.Date)</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @Html.DisplayNameFor(model => model.ShiftWork)
+                    <span class="badge badge-info badge-pill">@Html.DisplayFor(model => model.ShiftWork)</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @Html.DisplayNameFor(model => model.CheckInTime)
+                    <span class="badge badge-info badge-pill">@Html.DisplayFor(model => model.CheckInTime)</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @Html.DisplayNameFor(model => model.Notification)
+                    <span class="badge badge-info badge-pill">@Html.DisplayFor(model => model.Notification)</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @Html.DisplayNameFor(model => model.Late)
+                    <span class="badge badge-info badge-pill">@Html.DisplayFor(model => model.Late)</span>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <a asp-action="Index" class="btn btn-outline-info">Back to List</a>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-info">Edit</a>
+            @if (Storage.Instance.IsAdmin == LoginCurrentRole.Admin)
+            {
+                <a asp-action="GeneratePdf" asp-route-id="@Model.Employee.Id" class="btn btn-outline-info">Generate pdf</a>
+            }
+            </div>
+        <div class="col-md-6">
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/details.css" />
+}

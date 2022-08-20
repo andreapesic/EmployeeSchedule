@@ -1,0 +1,63 @@
+﻿
+
+
+.base {
+    color: #86C232;
+    padding-top: 3%;
+    padding-bottom: 2%;
+    font-family: 'Times New Roman', Times, serif;
+    height: 100%;
+    bottom: 0;
+    position: relative;
+    width: 100%;
+}
+
+.control-label {
+    font-size: 25px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+
+.base-login {
+    padding-left: 30%;
+    margin-top: 10%;
+}
+
+.base-helper {
+    height: 400px;
+    background-color: #474B4F;
+}
+
+.row{
+
+}
+
+.btn-outline-info {
+    width: 100%;
+    outline: solid;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+
+
+h1{
+    font-weight:700;
+    letter-spacing:3px; 
+    word-spacing:4px;
+    font-family:Arial;
+    font-size:50px;
+    text-transform:uppercase;
+}
+
+.title {
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 5px;
+    word-spacing: 4px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 60px;
+    text-transform: uppercase;
+}
+

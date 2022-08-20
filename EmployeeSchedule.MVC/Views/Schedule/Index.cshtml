@@ -1,0 +1,189 @@
+﻿@model IEnumerable<EmployeeSchedule.MVC.Models.ViewModel.ScheduleViewModel>
+@using EmployeeSchedule.MVC.Session
+@using EmployeeSchedule.MVC.Models.ViewModel
+@using EmployeeSchedule.Data.Entities.ApiEntities;
+
+
+@{
+    ViewData["Title"] = "Schedules";
+}
+
+@if (Storage.Instance.IsAdmin == LoginCurrentRole.Admin)
+{
+
+}
+<div class="base">
+    <div class="row">
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="scheduleSearchText" />
+        </div>
+        @if (Storage.Instance.IsAdmin == LoginCurrentRole.Admin)
+        {
+            <div class="col-sm-4">
+                <select id="scheduleEmployeeSearch" asp-items="@ViewBag.EmployeeSelectList" class="form-control">
+                </select>
+            </div>
+        }
+        <div class="col-sm-4">
+            <input type="date" class="form-control" id="scheduleSearchDate" />
+        </div>
+    </div>
+    <div class="row buttons-index">
+
+        @if (Storage.Instance.IsAdmin == LoginCurrentRole.Admin || (ViewBag.CreateScheduleEnabled != null && ViewBag.CreateScheduleEnabled))
+        {
+            <div class="col-sm-4">
+                <a class="btn btn-outline-info" asp-action="Create">Create schedule</a>
+            </div>
+        }
+        <div class="col-sm-4">
+            <input id="scheduleSearch" width="100" type="button" value="Search" class="btn btn-outline-info" />
+        </div>
+        <div class="col-sm-4">
+            <a class="btn btn-outline-info" asp-action="Index">Reset</a>
+        </div>
+    </div>
+    @if (ViewBag.NumberOfRequests != null && ViewBag.NumberOfRequests > 0)
+    {
+        <div class="alert alert-warning" role="alert" style="margin-top:1%;width:50%">
+            Trenutno imate @ViewBag.NumberOfRequests zahteva za kreiranjem rasporeda
+        </div>
+    }
+
+    @if (TempData["DeleteError"] != null)
+    {
+        @if ((bool)TempData["DeleteError"])
+        {
+            <div class="alert alert-warning" role="alert" style="margin-top:1%; width:50%">
+                Delete error
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert" style="margin-top:1%; width:50%">
+                Success delete
+            </div>
+        }
+    }
+
+    <table class="table">
+        <thead class="table-head">
+            <tr>
+                @if (Storage.Instance.IsAdmin == LoginCurrentRole.Admin)
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.Employee)
+                    </th>
+                }
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShiftWork)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CheckInTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Notification)
+                </th>
+                <th>
+                    Check in
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="scheduleResultInsert" class="table-body">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @if (Storage.Instance.IsAdmin == LoginCurrentRole.Admin)
+                    {
+                        <td>
+                            @Html.DisplayFor(model => item.Employee.Name)  @Html.DisplayFor(model => item.Employee.Surname)
+                        </td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShiftWork)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CheckInTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Notification)
+                    </td>
+                    <td>
+                        @if (item.CheckInStatus == CheckInStatus.NotRequired)
+                        {
+                            <h6>Not required</h6>
+                        }
+                        else if (item.CheckInStatus == CheckInStatus.Late)
+                        {
+                            <h6>Late</h6>
+                        }
+                        else if (item.CheckInStatus == CheckInStatus.OnTime)
+                        {
+                            <h6>On time</h6>
+                        }
+                        else if (item.CheckInStatus == CheckInStatus.FreeDay)
+                        {
+                            <h6>Free day</h6>
+                        }
+                        else if (item.CheckInStatus == CheckInStatus.WaitingSchedule)
+                        {
+                            <h6>Waiting schedule</h6>
+                        }
+                        else
+                        {
+                            @if (Storage.Instance.IsAdmin == LoginCurrentRole.Employee)
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-light">Check in</a>
+                            }
+                            else
+                            {
+                                <h6>Wait check in</h6>
+                            }
+                        }
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-success" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        @if (Storage.Instance.IsAdmin == LoginCurrentRole.Admin)
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-light">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    @if (ViewBag.Holidays != null)
+    {
+        <div class="holidays">
+            <h4>
+                Holidays
+            </h4>
+            <ul class="list-group">
+                @foreach (Holiday holiday in ViewBag.Holidays)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        @holiday.LocalName
+                        <span class="badge badge-info badge-pill">@holiday.Date.ToString("dd.MM")</span>
+                    </li>
+
+                }
+            </ul>
+        </div>
+
+    }
+
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/index.css" />
+}
