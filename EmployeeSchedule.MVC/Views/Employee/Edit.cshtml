@@ -49,6 +49,14 @@
                     <input asp-for="Possition" class="form-control" />
                     <span asp-validation-for="Possition" class="text-danger"></span>
                 </div>
+                @if (EmployeeSchedule.MVC.Session.Storage.Instance.IsAdmin == EmployeeSchedule.MVC.Session.LoginCurrentRole.Admin)
+                { 
+                <div class="form-group">
+                    <label asp-for="Administrator" class="control-label"></label>
+                    <input asp-for="Administrator" class="form-control" />
+                    <span asp-validation-for="Administrator" class="text-danger"></span>
+                </div>
+                }
                 <div class="form-group">
                     <label asp-for="Company" class="control-label"></label>
                     <select asp-for="Company.Id" asp-items="@Model.CompaniesSelectList" class="form-control">
@@ -67,10 +75,9 @@
                 </div>
                 @if (!string.IsNullOrEmpty(@Model.ValidationMessage))
                 {
-                    <div class="alert alert-info" role="alert">
-                        @Model.ValidationMessage
-                    </div>
-                }
+            <div class="alert alert-info" role="alert">
+                @Model.ValidationMessage
+            </div>}
             </form>
         </div>
     </div>
