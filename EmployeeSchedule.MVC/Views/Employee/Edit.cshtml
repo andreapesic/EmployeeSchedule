@@ -1,5 +1,5 @@
 ﻿@model EmployeeSchedule.MVC.Models.Create.EmployeeCreate
-
+@using EmployeeSchedule.MVC.Session
 @{
     ViewData["Title"] = "Edit company";
 }
@@ -50,12 +50,12 @@
                     <span asp-validation-for="Possition" class="text-danger"></span>
                 </div>
                 @if (EmployeeSchedule.MVC.Session.Storage.Instance.IsAdmin == EmployeeSchedule.MVC.Session.LoginCurrentRole.Admin)
-                { 
-                <div class="form-group">
-                    <label asp-for="Administrator" class="control-label"></label>
-                    <input asp-for="Administrator" class="form-control" />
-                    <span asp-validation-for="Administrator" class="text-danger"></span>
-                </div>
+                {
+                    <div class="form-group">
+                        <label asp-for="Administrator" class="control-label"></label>
+                        <input asp-for="Administrator" class="form-control" />
+                        <span asp-validation-for="Administrator" class="text-danger"></span>
+                    </div>
                 }
                 <div class="form-group">
                     <label asp-for="Company" class="control-label"></label>
@@ -70,25 +70,35 @@
                     <span asp-validation-for="CityName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <a asp-action="Index" class="btn btn-outline-info">Back to List</a>
+
+                    @if (Storage.Instance.IsAdmin == LoginCurrentRole.Admin && Storage.Instance.LoginEmployee.Id != Model.Id)
+                    {<a asp-action="Index" class="btn btn-outline-info">Back to List</a>}
+
+                    else
+                    {
+                        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-info">Back to Profile</a>
+                    }
+
+
+
                     <input type="submit" value="Edit" class="btn btn-info" />
                 </div>
                 @if (!string.IsNullOrEmpty(@Model.ValidationMessage))
                 {
-            <div class="alert alert-info" role="alert">
-                @Model.ValidationMessage
-            </div>}
+                    <div class="alert alert-info" role="alert">
+                        @Model.ValidationMessage
+                    </div>}
             </form>
         </div>
     </div>
 
 </div>
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
 
-    @section Styles {
-        <link rel="stylesheet" href="~/css/create.css" />
-    }
+@section Styles {
+    <link rel="stylesheet" href="~/css/create.css" />
+}

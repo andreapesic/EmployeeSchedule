@@ -32,12 +32,23 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <a asp-action="Index" class="btn btn-outline-info">Back to List</a>
+            
+            @if (Storage.Instance.IsAdmin == LoginCurrentRole.Admin)
+            {
+                <a asp-action="Index" class="btn btn-outline-info">Back to List</a>
+
+            }
+            else
+            {<a asp-controller="Schedule" asp-action="Index" class="btn btn-outline-info">Back to Schedule</a>}
+
+
+
             @if (Storage.Instance.IsAdmin == LoginCurrentRole.Admin)
             {
                 <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-info">Edit</a>
             }
-            </div>
+
+        </div>
         <div class="col-md-6">
         </div>
     </div>
