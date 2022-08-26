@@ -46,12 +46,13 @@
     <div class="row">
         <div class="col-md-6">
             <a asp-action="Index" class="btn btn-outline-info">Back to List</a>
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-info">Edit</a>
+
             @if (Storage.Instance.IsAdmin == LoginCurrentRole.Admin)
             {
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-info">Edit</a>
                 <a asp-action="GeneratePdf" asp-route-id="@Model.Employee.Id" class="btn btn-outline-info">Generate pdf</a>
             }
-            </div>
+        </div>
         <div class="col-md-6">
         </div>
     </div>

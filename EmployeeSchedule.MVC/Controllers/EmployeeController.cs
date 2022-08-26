@@ -31,7 +31,12 @@ namespace EmployeeSchedule.MVC.Controllers
         public async Task<ActionResult> Index()
         {
             var employees = await _employeeService.GetAll();
+            
+            
             return View(_mapper.Map<List<EmployeeViewModel>>(employees));
+
+     
+           
         }
 
         // GET: EmployeeController/Details/5
