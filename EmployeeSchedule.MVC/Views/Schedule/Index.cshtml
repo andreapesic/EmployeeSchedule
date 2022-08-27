@@ -82,6 +82,7 @@
                     @Html.DisplayNameFor(model => model.ShiftWork)
                 </th>
                 <th>
+                   
                     @Html.DisplayNameFor(model => model.CheckInTime)
                 </th>
                 <th>
@@ -104,13 +105,19 @@
                         </td>
                     }
                     <td>
-                        @Html.DisplayFor(modelItem => item.Date)
+                        @{ var parametar = item.Date.ToShortDateString();}
+                        @Html.DisplayFor(modelItem => parametar)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ShiftWork)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CheckInTime)
+                        @if(item.CheckInTime == DateTime.MinValue)
+                {
+                            <p>Not checked in yet</p>
+                }
+                else { 
+                        @Html.DisplayFor(modelItem => item.CheckInTime)}
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Notification)
@@ -135,6 +142,10 @@
                         else if (item.CheckInStatus == CheckInStatus.WaitingSchedule)
                         {
                             <h6>Waiting schedule</h6>
+                        }
+                        else if (item.CheckInStatus == CheckInStatus.NotAvailableForCheckIn)
+                        {
+                            <h6>Not available for check in</h6>
                         }
                         else
                         {

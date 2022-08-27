@@ -49,7 +49,8 @@ namespace EmployeeSchedule.MVC.Controllers
                 schedules = await _scheduleService.GetScheduleForEmployee(Storage.Instance.LoginEmployee.Id);
             }
 
-            schedules.OrderBy(e => e.Date);
+            schedules = schedules.OrderByDescending(e => e.Date.Date);
+        
 
             var schedulesViewModel = _mapper.Map<List<ScheduleViewModel>>(schedules);
             schedulesViewModel.ForEach(e => e.SetCheckInStatus());
@@ -140,6 +141,9 @@ namespace EmployeeSchedule.MVC.Controllers
                 }
 
                 var schedule = _mapper.Map<Schedule>(scheduleCreate);
+                //DateTime pom = schedule.Date;
+                //schedule.Date = pom.Date.AddHours(23);
+                //schedule.Date = schedule.Date.AddMinutes(35);
                 await _scheduleService.Insert(schedule);
                 scheduleCreate.ValidationMessage = "Success";
                 return View(scheduleCreate);

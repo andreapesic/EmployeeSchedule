@@ -31,6 +31,7 @@ namespace EmployeeSchedule.MVC.Models.ViewModel
 
     public enum CheckInStatus
     {
-        Late, OnTime, CheckIn, NotRequired, FreeDay, WaitingSchedule
+        Late, OnTime, CheckIn, NotRequired, FreeDay, WaitingSchedule,
+        NotAvailableForCheckIn
     }
 }
