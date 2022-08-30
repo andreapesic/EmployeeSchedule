@@ -6,6 +6,7 @@ namespace EmployeeSchedule.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            
             migrationBuilder.AlterColumn<string>(
                 name: "ShiftWork",
                 table: "Schedule",
