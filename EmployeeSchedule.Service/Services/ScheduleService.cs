@@ -71,6 +71,7 @@ namespace EmployeeSchedule.Service.Services
             schedules = schedules.Where(e => (e.ShiftWork.ToLower().Contains(criteria.ToLower()))
             && (string.IsNullOrEmpty(criteria2) || e.Employee.Id.ToString() == criteria2) && (date == DateTime.MinValue || e.Date.Date == date.Date)).ToList();
 
+
             return schedules;
         }
 

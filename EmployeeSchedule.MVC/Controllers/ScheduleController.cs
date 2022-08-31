@@ -217,7 +217,13 @@ namespace EmployeeSchedule.MVC.Controllers
         public async Task<ActionResult> Search(string text, string employeeId, DateTime date)
         {
             var schedules = await _scheduleService.Search(text ?? string.Empty,employeeId,date);
-            return PartialView(_mapper.Map<List<ScheduleViewModel>>(schedules));
+
+            if (Storage.Instance.IsAdmin != LoginCurrentRole.Admin)
+            {
+                schedules = schedules.Where(x => x.Employee.Id == Storage.Instance.LoginEmployee.Id).ToList();
+            }
+
+                return PartialView(_mapper.Map<List<ScheduleViewModel>>(schedules));
         }
     }
 }

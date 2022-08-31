@@ -113,11 +113,12 @@
                     </td>
                     <td>
                         @if(item.CheckInTime == DateTime.MinValue)
-                {
+                        {
                             <p>Not checked in yet</p>
-                }
-                else { 
-                        @Html.DisplayFor(modelItem => item.CheckInTime)}
+                        }
+                        else { 
+                        @Html.DisplayFor(modelItem => item.CheckInTime)
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Notification)
@@ -186,7 +187,6 @@
                         @holiday.LocalName
                         <span class="badge badge-info badge-pill">@holiday.Date.ToString("dd.MM")</span>
                     </li>
-
                 }
             </ul>
         </div>
