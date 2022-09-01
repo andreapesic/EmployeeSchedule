@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EmployeeSchedule.Data.Helper;
 
 namespace EmployeeSchedule.MVC.Controllers
 {
@@ -18,6 +19,7 @@ namespace EmployeeSchedule.MVC.Controllers
         private readonly IEmployeeService _employeeService;
         private readonly IMapper _mapper;
         private readonly IWebApiService _apiService;
+        private readonly string  key = "b14ca5898a4e4133bbce2ea2315a1916";
 
         public EmployeeController(IEmployeeService employeeService, IGenericService<Company> companyService, IMapper mapper, IWebApiService apiService)
         {
@@ -80,6 +82,8 @@ namespace EmployeeSchedule.MVC.Controllers
                 }
 
                 var employee = _mapper.Map<Employee>(employeeCreate);
+                string hashedPassword = AesOperation.EncryptString(key, employee.Password);
+                employee.Password = hashedPassword;
                 await _employeeService.Insert(employee);
                 employeeCreate.ValidationMessage = "Success";
                 return View(employeeCreate);

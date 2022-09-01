@@ -13,4 +13,8 @@
     <ProjectReference Include="..\EmployeeSchedule.Infrastructure\EmployeeSchedule.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Helper\" />
+  </ItemGroup>
+
 </Project>

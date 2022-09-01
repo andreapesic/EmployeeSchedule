@@ -1,4 +1,5 @@
 ﻿using EmployeeSchedule.Data.Entities;
+using EmployeeSchedule.Data.Helper;
 using EmployeeSchedule.Data.Interface;
 using EmployeeSchedule.Infrastructure.UnitOfWork.Interface;
 using System;
@@ -11,6 +12,7 @@ namespace EmployeeSchedule.Service.Services
     public class EmployeeService : IEmployeeService 
     {
         private readonly IUnitOfWork<Employee> _unitOfWork;
+        private string key = "b14ca5898a4e4133bbce2ea2315a1916";
         public EmployeeService(IUnitOfWork<Employee> unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -51,7 +53,7 @@ namespace EmployeeSchedule.Service.Services
         public async Task<Employee> Login(string email, string password)
         {
             var employees = await GetAll();
-            var loginEmployee = employees.SingleOrDefault(e => e.Email == email && e.Password == password);
+            var loginEmployee = employees.SingleOrDefault(e => e.Email == email && AesOperation.DecryptString(key, e.Password) == password);
             return loginEmployee;
         }
 
