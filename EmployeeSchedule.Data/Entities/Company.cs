@@ -13,7 +13,7 @@ namespace EmployeeSchedule.Data.Entities
         [Required]
         public string Adress { get; set; }
         [Required]
-        public string Domain { get; set; }
+        public CompanyDomain Domain { get; set; }
 
     }
 }

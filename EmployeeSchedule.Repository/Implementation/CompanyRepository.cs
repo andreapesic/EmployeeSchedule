@@ -24,13 +24,13 @@ namespace EmployeeSchedule.Repository.Implementation
 
         public async Task<IEnumerable<Company>> GetAll()
         {
-            var companies = await _db.Company.ToListAsync();
+            var companies = await _db.Company.Include(x => x.Domain).ToListAsync();
             return companies;
         }
 
         public async Task<Company> GetById(int id)
         {
-            var company = await _db.Company.SingleOrDefaultAsync(e => e.Id == id);
+            var company = await _db.Company.Include(x=>x.Domain).SingleOrDefaultAsync(e => e.Id == id);
 
             if(company == null)
             {
@@ -42,6 +42,13 @@ namespace EmployeeSchedule.Repository.Implementation
 
         public async Task<bool> Insert(Company entity)
         {
+            var domain = await _db.CompanyDomain.SingleOrDefaultAsync(e => e.Id == entity.Domain.Id);
+            if (domain == null)
+            {
+                throw new NullReferenceException("Company domain doesn't exists");
+            }
+            entity.Domain = domain;
+
             await _db.AddAsync(entity);
             return true;
         }
@@ -49,6 +56,14 @@ namespace EmployeeSchedule.Repository.Implementation
         public async Task<bool> Update(Company entity)
         {
             var oldEntity = await GetById(entity.Id);
+
+            var domain = await _db.CompanyDomain.SingleOrDefaultAsync(e => e.Id == entity.Domain.Id);
+            if (domain == null)
+            {
+                throw new NullReferenceException("Company domain doesn't exists");
+            }
+            entity.Domain = domain;
+
             _db.Entry(oldEntity).State = EntityState.Detached;
             _db.Update(entity);
 

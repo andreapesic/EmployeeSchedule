@@ -14,17 +14,9 @@ namespace EmployeeSchedule.Data
         public DbSet<Schedule> Schedule { get; set; }
         public DbSet<Company> Company { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Company>().HasData(new Company
-            {
-                Id = 3,
-                Adress = "Vladimira Popovica",
-                Domain = "Finance",
-                IdentificationNumber = "1234",
-                Name = "Banca Intesa"
-            }
-);
+        public DbSet<CompanyDomain> CompanyDomain { get; set; }
+
+        
         }
     }
 }

@@ -8,6 +8,20 @@ namespace EmployeeSchedule.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+               name: "CompanyDomain",
+               columns: table => new
+               {
+                   Id = table.Column<int>(type: "int", nullable: false)
+                       .Annotation("SqlServer:Identity", "1, 1"),
+                   Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                 
+               },
+               constraints: table =>
+               {
+                   table.PrimaryKey("PK_CompanyDomain", x => x.Id);
+               });
+
+            migrationBuilder.CreateTable(
                 name: "Company",
                 columns: table => new
                 {
@@ -16,11 +30,17 @@ namespace EmployeeSchedule.Data.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdentificationNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Domain = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    DomainId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Company", x => x.Id);
+                    table.ForeignKey(
+                      name: "FK_CompanyDomain_Company_DomainId",
+                      column: x => x.DomainId,
+                      principalTable: "CompanyDomain",
+                      principalColumn: "Id",
+                      onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
