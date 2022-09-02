@@ -19,24 +19,13 @@ namespace EmployeeSchedule.Data.Migrations
               }
               );
 
-            migrationBuilder.InsertData(
-                table: "Company",
-                columns: new[] { "Name", "IdentificationNumber", "Adress", "Domain" },
-                values: new object[,] {
-                    {"Banca Intesa", "2536367373", "Vladimira Popovica 10", 1 },
-                    {"Roche", "145374934", "Vladimira Popovica 8", 2 },
-                    {"A1", "2536367373", "Bulevar Umetnosti 35", 3 }
-                }
-                );
-
-
 
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+          
             migrationBuilder.Sql("DELETE FROM CompanyDomain", true);
-            migrationBuilder.Sql("DELETE FROM Company", true);
 
         }
     }

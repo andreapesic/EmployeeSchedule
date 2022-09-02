@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeSchedule.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220825192931_Database filled 2")]
-    partial class Databasefilled2
+    [Migration("20220902160916_Database filled 3")]
+    partial class Databasefilled3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,7 +20,7 @@ namespace EmployeeSchedule.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.14")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
+            
             modelBuilder.Entity("EmployeeSchedule.Data.Entities.CompanyDomain", b =>
             {
                 b.Property<int>("Id")
@@ -28,18 +28,15 @@ namespace EmployeeSchedule.Data.Migrations
                     .HasColumnType("int")
                     .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-
                 b.Property<string>("Name")
                     .IsRequired()
                     .HasColumnType("nvarchar(max)");
 
-
                 b.HasKey("Id");
 
                 b.ToTable("CompanyDomain");
-            });
 
-            modelBuilder.Entity("EmployeeSchedule.Data.Entities.Company", b =>
+                modelBuilder.Entity("EmployeeSchedule.Data.Entities.Company", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,7 +48,6 @@ namespace EmployeeSchedule.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DomainId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("IdentificationNumber")
@@ -65,7 +61,12 @@ namespace EmployeeSchedule.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DomainId");
+
                     b.ToTable("Company");
+                });
+
+         
                 });
 
             modelBuilder.Entity("EmployeeSchedule.Data.Entities.Employee", b =>
@@ -153,6 +154,17 @@ namespace EmployeeSchedule.Data.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("Schedule");
+                });
+
+            modelBuilder.Entity("EmployeeSchedule.Data.Entities.Company", b =>
+                {
+                    b.HasOne("EmployeeSchedule.Data.Entities.CompanyDomain", "Domain")
+                        .WithMany()
+                        .HasForeignKey("DomainId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Domain");
                 });
 
             modelBuilder.Entity("EmployeeSchedule.Data.Entities.Employee", b =>

@@ -13,10 +13,9 @@ namespace EmployeeSchedule.Data
         public DbSet<Employee> Employee { get; set; }
         public DbSet<Schedule> Schedule { get; set; }
         public DbSet<Company> Company { get; set; }
-
         public DbSet<CompanyDomain> CompanyDomain { get; set; }
 
         
         }
     }
-}
+

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeeSchedule.Data.Entities
 {
@@ -13,6 +14,7 @@ namespace EmployeeSchedule.Data.Entities
         [Required]
         public string Adress { get; set; }
         [Required]
+        [ForeignKey("DomainId")]
         public CompanyDomain Domain { get; set; }
 
     }

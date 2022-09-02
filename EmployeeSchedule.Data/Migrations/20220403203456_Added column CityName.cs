@@ -109,16 +109,6 @@ namespace EmployeeSchedule.Data.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "Domain",
-                table: "Company",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
                 name: "Adress",
                 table: "Company",
                 type: "nvarchar(max)",
@@ -127,6 +117,8 @@ namespace EmployeeSchedule.Data.Migrations
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)",
                 oldNullable: true);
+
+          
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -213,20 +205,14 @@ namespace EmployeeSchedule.Data.Migrations
                 oldMaxLength: 13);
 
             migrationBuilder.AlterColumn<string>(
-                name: "Domain",
-                table: "Company",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
-
-            migrationBuilder.AlterColumn<string>(
                 name: "Adress",
                 table: "Company",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
+
+  
         }
     }
 }

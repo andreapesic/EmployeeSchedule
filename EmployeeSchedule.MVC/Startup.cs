@@ -35,14 +35,17 @@ namespace EmployeeSchedule.MVC
             services.AddControllersWithViews();
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection")));
             services.AddMapperConfiguration();
+            services.AddScoped<IRepository<CompanyDomain>, CompanyDomainRepository>();
             services.AddScoped<IRepository<Company>, CompanyRepository>();
             services.AddScoped<IRepository<Employee>, EmployeeRepository>();
             services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            services.AddScoped<IUnitOfWork<CompanyDomain>, CompanyDomainUnitOfWork>();
             services.AddScoped<IUnitOfWork<Company>, CompanyUnitOfWork>();
             services.AddScoped<IUnitOfWork<Employee>, EmployeeUnitOfWork>();
             services.AddScoped<IUnitOfWork<Schedule>, ScheduleUnitOfWork>();
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IGenericService<CompanyDomain>, CompanyDomainService>();
             services.AddScoped<IGenericService<Company>, CompanyService>();
             services.AddScoped<IWebApiService, WebApiService>();
             services.AddScoped<IPdfService, PdfService>();

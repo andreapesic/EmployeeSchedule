@@ -94,6 +94,12 @@ namespace EmployeeSchedule.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+
+            migrationBuilder.CreateIndex(
+              name: "IX_Company_DomainId",
+              table: "Company",
+              column: "DomainId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_CompanyId",
                 table: "Employee",
@@ -103,6 +109,7 @@ namespace EmployeeSchedule.Data.Migrations
                 name: "IX_Schedule_EmployeeId",
                 table: "Schedule",
                 column: "EmployeeId");
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -115,6 +122,10 @@ namespace EmployeeSchedule.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Company");
+
+
+            migrationBuilder.DropTable(
+                name: "CompanyDomain");
         }
     }
 }

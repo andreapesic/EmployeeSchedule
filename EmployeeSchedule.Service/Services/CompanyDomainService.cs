@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeSchedule.Service.Services
 {
-    class CompanyDomainService : IGenericService<CompanyDomain>
+    public class CompanyDomainService : IGenericService<CompanyDomain>
     {
 
         private readonly IUnitOfWork<CompanyDomain> _unitOfWork;

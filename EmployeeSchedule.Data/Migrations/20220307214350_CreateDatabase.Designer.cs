@@ -21,6 +21,25 @@ namespace EmployeeSchedule.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.14")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("EmployeeSchedule.Data.Entities.CompanyDomain", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int")
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+
+                b.HasKey("Id");
+
+                b.ToTable("CompanyDomain");
+            });
+
+
             modelBuilder.Entity("EmployeeSchedule.Data.Entities.Company", b =>
                 {
                     b.Property<int>("Id")
@@ -31,8 +50,8 @@ namespace EmployeeSchedule.Data.Migrations
                     b.Property<string>("Adress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Domain")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DomainId")
+                        .HasColumnType("int");
 
                     b.Property<string>("IdentificationNumber")
                         .HasColumnType("nvarchar(max)");
@@ -41,7 +60,7 @@ namespace EmployeeSchedule.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
+                    b.HasIndex("DomainId");
                     b.ToTable("Company");
                 });
 

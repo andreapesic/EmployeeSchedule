@@ -30,9 +30,8 @@ namespace EmployeeSchedule.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Domain")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DomainId")
+                        .HasColumnType("int");
 
                     b.Property<string>("IdentificationNumber")
                         .IsRequired()
@@ -45,7 +44,25 @@ namespace EmployeeSchedule.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DomainId");
+
                     b.ToTable("Company");
+                });
+
+            modelBuilder.Entity("EmployeeSchedule.Data.Entities.CompanyDomain", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CompanyDomain");
                 });
 
             modelBuilder.Entity("EmployeeSchedule.Data.Entities.Employee", b =>
@@ -133,6 +150,17 @@ namespace EmployeeSchedule.Data.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("Schedule");
+                });
+
+            modelBuilder.Entity("EmployeeSchedule.Data.Entities.Company", b =>
+                {
+                    b.HasOne("EmployeeSchedule.Data.Entities.CompanyDomain", "Domain")
+                        .WithMany()
+                        .HasForeignKey("DomainId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Domain");
                 });
 
             modelBuilder.Entity("EmployeeSchedule.Data.Entities.Employee", b =>
