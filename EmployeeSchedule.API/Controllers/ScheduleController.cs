@@ -3,7 +3,11 @@ using EmployeeSchedule.Data.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Net.Mail;
+using System.Net.Mime;
+using System.Net;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace EmployeeSchedule.API.Controllers
 {
@@ -62,13 +66,16 @@ namespace EmployeeSchedule.API.Controllers
             try
             {
                 var result = await _service.Insert(entity);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
+                Console.WriteLine(result);
+                    
+                    
+                
+            } catch (Exception ex) {
                 return BadRequest(ex.Message);
             }
+            return Ok();
         }
+
 
         [HttpPut("{id}")]
         public async Task<ActionResult<bool>> Put(int id, [FromBody] Schedule entity)

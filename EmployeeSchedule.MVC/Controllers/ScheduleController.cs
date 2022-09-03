@@ -13,6 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace EmployeeSchedule.MVC.Controllers
@@ -146,6 +148,35 @@ namespace EmployeeSchedule.MVC.Controllers
                 //schedule.Date = schedule.Date.AddMinutes(35);
                 await _scheduleService.Insert(schedule);
                 scheduleCreate.ValidationMessage = "Success PROBA";
+                try
+                {
+                    var smtpClient = new SmtpClient("smtp.gmail.com")
+                    {
+                        Port = 587,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential("andrea.softveri.spacentar@gmail.com", "dnttozzavgawlqnw"),
+                        EnableSsl = true,
+                    };
+                    string subject = "Obavestenje o napravljenom rasporedu";
+                    string body = "Postovana/i " + schedule.Employee.Name + ",<br/>" +
+                        "Obavestavamo Vas da je kreiran Vas raspored rada za: " + schedule.Date;
+
+                    var mailMessage = new MailMessage
+                    {
+                        From = new MailAddress("andrea.softveri.spacentar@gmail.com"),
+                        Subject = subject,
+                        Body = body,
+                        IsBodyHtml = true,
+                    };
+
+                    mailMessage.To.Add(schedule.Employee.Email);
+                    smtpClient.SendAsync(mailMessage, new object());
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
                 return View(scheduleCreate);
             }
             catch (Exception ex)
