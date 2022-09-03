@@ -50,6 +50,7 @@ namespace EmployeeSchedule.Repository.Implementation
             entity.Domain = domain;
 
             await _db.AddAsync(entity);
+             
             return true;
         }
 
