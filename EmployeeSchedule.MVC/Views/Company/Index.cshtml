@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<EmployeeSchedule.MVC.Models.Create.CompanyCreate>
 
+@{
+    ViewData["Title"] = "Companies";
+}
+
 <div class="base">
     <div class="row">
         <div class="col-sm-3">
@@ -38,10 +42,10 @@
                         @Html.DisplayFor(modelItem => item.Adress)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Domain)
+                        @Html.DisplayFor(modelItem => item.Domain.Name)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-light">Edit</a> 
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-light">Edit</a>
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-success">Details</a>
                     </td>
                 </tr>

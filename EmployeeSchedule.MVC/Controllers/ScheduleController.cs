@@ -145,7 +145,7 @@ namespace EmployeeSchedule.MVC.Controllers
                 //schedule.Date = pom.Date.AddHours(23);
                 //schedule.Date = schedule.Date.AddMinutes(35);
                 await _scheduleService.Insert(schedule);
-                scheduleCreate.ValidationMessage = "Success";
+                scheduleCreate.ValidationMessage = "Success PROBA";
                 return View(scheduleCreate);
             }
             catch (Exception ex)

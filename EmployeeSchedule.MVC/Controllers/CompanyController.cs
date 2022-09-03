@@ -15,12 +15,15 @@ namespace EmployeeSchedule.MVC.Controllers
         private readonly IGenericService<Company> _service;
         private readonly IMapper _mapper;
         private readonly IWebApiService _apiService;
-        public CompanyController(IGenericService<Company> service, IMapper mapper, IWebApiService apiService)
+        private readonly IGenericService<CompanyDomain> _companyDomainService;
+        public CompanyController(IGenericService<Company> service, IGenericService<CompanyDomain> companyDomainService, IMapper mapper, IWebApiService apiService)
         {
             _service = service;
             _mapper = mapper;
             _apiService = apiService;
+            _companyDomainService = companyDomainService;
         }
+
         // GET: CompanyController
         public async Task<ActionResult> Index()
         {
@@ -43,9 +46,12 @@ namespace EmployeeSchedule.MVC.Controllers
         }
 
         // GET: CompanyController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View(new CompanyCreate());
+            var domains = await _companyDomainService.GetAll();
+            var companyCreate = new CompanyCreate();
+            companyCreate.CompanyDomainSelectList(domains);
+            return View(companyCreate);
         }
 
         // POST: CompanyController/Create
@@ -55,6 +61,8 @@ namespace EmployeeSchedule.MVC.Controllers
         {
             try
             {
+                companyCreate.CompanyDomainSelectList(await _companyDomainService.GetAll());
+
                 if (!ModelState.IsValid)
                 {
                     return View(companyCreate);
@@ -75,7 +83,10 @@ namespace EmployeeSchedule.MVC.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             var company = await _service.GetById(id);
-            return View(_mapper.Map<CompanyCreate>(company));
+            var companyCreate = _mapper.Map<CompanyCreate>(company);
+            var domains = await _companyDomainService.GetAll();
+            companyCreate.CompanyDomainSelectList(domains);
+            return View(companyCreate);
         }
 
         // POST: CompanyController/Edit/5
@@ -86,6 +97,7 @@ namespace EmployeeSchedule.MVC.Controllers
             try
             {
                 companyCreate.Id = id;
+                companyCreate.CompanyDomainSelectList(await _companyDomainService.GetAll());
 
                 if (!ModelState.IsValid)
                 {
