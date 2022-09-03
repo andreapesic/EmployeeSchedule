@@ -68,35 +68,7 @@ namespace EmployeeSchedule.API.Controllers
                 var result = await _service.Insert(entity);
                 Console.WriteLine(result);
                     
-                    try
-                    {
-                        var smtpClient = new SmtpClient("smtp.gmail.com")
-                        {
-                            Port = 587,
-                            DeliveryMethod = SmtpDeliveryMethod.Network,
-                            UseDefaultCredentials = false,
-                            Credentials = new NetworkCredential("andrea.softveri.spacentar@gmail.com", "dnttozzavgawlqnw"),
-                            EnableSsl = true,
-                        };
-                        string subject = "Obavestenje o napravljenom rasporedu";
-                        string body = "Postovana/i " + entity.Employee.Name + ",<br/>" +
-                            "Obavestavamo Vas da je kreiran Vas raspored rada za: " + entity.Date;
-
-                        var mailMessage = new MailMessage
-                        {
-                            From = new MailAddress("andrea.softveri.spacentar@gmail.com"),
-                            Subject = subject,
-                            Body = body,
-                            IsBodyHtml = true,
-                        };
-
-                        mailMessage.To.Add(entity.Employee.Email);
-                        smtpClient.SendAsync(mailMessage, new object());
-                    }
-                    catch (Exception e)
-                    {
-                        return BadRequest(e.Message);
-                    }
+                    
                 
             } catch (Exception ex) {
                 return BadRequest(ex.Message);
