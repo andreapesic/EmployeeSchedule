@@ -3,7 +3,11 @@ using EmployeeSchedule.Data.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Net.Mail;
+using System.Net.Mime;
+using System.Net;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace EmployeeSchedule.API.Controllers
 {
@@ -62,13 +66,44 @@ namespace EmployeeSchedule.API.Controllers
             try
             {
                 var result = await _service.Insert(entity);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
+                Console.WriteLine(result);
+                    
+                    try
+                    {
+                        var smtpClient = new SmtpClient("smtp.gmail.com")
+                        {
+                            Port = 587,
+                            DeliveryMethod = SmtpDeliveryMethod.Network,
+                            UseDefaultCredentials = false,
+                            Credentials = new NetworkCredential("andrea.softveri.spacentar@gmail.com", "dnttozzavgawlqnw"),
+                            EnableSsl = true,
+                        };
+                        string subject = "Obavestenje o napravljenom rasporedu";
+                        string body = "Postovana/i " + entity.Employee.Name + ",<br/>" +
+                            "Obavestavamo Vas da je kreiran Vas raspored rada za: " + entity.Date;
+
+                        var mailMessage = new MailMessage
+                        {
+                            From = new MailAddress("andrea.softveri.spacentar@gmail.com"),
+                            Subject = subject,
+                            Body = body,
+                            IsBodyHtml = true,
+                        };
+
+                        mailMessage.To.Add(entity.Employee.Email);
+                        smtpClient.SendAsync(mailMessage, new object());
+                    }
+                    catch (Exception e)
+                    {
+                        return BadRequest(e.Message);
+                    }
+                
+            } catch (Exception ex) {
                 return BadRequest(ex.Message);
             }
+            return Ok();
         }
+
 
         [HttpPut("{id}")]
         public async Task<ActionResult<bool>> Put(int id, [FromBody] Schedule entity)
