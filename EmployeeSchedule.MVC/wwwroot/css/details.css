@@ -11,7 +11,7 @@ body {
 
 .base {
     background-color: #474B4F;
-    color: #86C232;
+    color: rosybrown;
     padding-left: 30%;
     font-size: 20px;
     padding-top: 3%;
@@ -42,7 +42,7 @@ body {
     width: 100%;
     outline: solid;
     border: 2px solid;
-    color: #61892F;
+    color: rosybrown;
     text-transform:uppercase;
     font-weight:900;
     margin-top:3%;
