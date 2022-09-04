@@ -16,6 +16,14 @@ body {
 }
 
 
-.navbar-expand-sm {
+/*.navbar-expand-sm {
     margin-left: 10%;
+}*/
+
+.navbar .nav-item .nav-link{
+    color: rosybrown!important;
+}
+
+.navbar {
+    border-bottom:solid 1px rosybrown!important;
 }
