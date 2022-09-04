@@ -155,7 +155,7 @@ namespace EmployeeSchedule.MVC.Controllers
                         Port = 587,
                         DeliveryMethod = SmtpDeliveryMethod.Network,
                         UseDefaultCredentials = false,
-                        Credentials = new NetworkCredential("andrea.softveri.spacentar@gmail.com", "dnttozzavgawlqnw"),
+                        Credentials = new NetworkCredential("itehprojekat51@gmail.com", "qqwfrmdhypwumkpw"),
                         EnableSsl = true,
                     };
                     string subject = "Obavestenje o napravljenom rasporedu";
@@ -164,7 +164,7 @@ namespace EmployeeSchedule.MVC.Controllers
 
                     var mailMessage = new MailMessage
                     {
-                        From = new MailAddress("andrea.softveri.spacentar@gmail.com"),
+                        From = new MailAddress("itehprojekat51@gmail.com"),
                         Subject = subject,
                         Body = body,
                         IsBodyHtml = true,
