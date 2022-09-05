@@ -27,7 +27,7 @@ namespace EmployeeSchedule.MVC.Extensions
                     return;
                 }
 
-                schedule.CheckInStatus = (schedule.Date.Date > DateTime.Now.Date || (schedule.Date.Date== DateTime.Now.Date && DateTime.Now.Hour <1 && schedule.ShiftWork=="Prva")
+                schedule.CheckInStatus = (schedule.Date.Date > DateTime.Now.Date || (schedule.Date.Date== DateTime.Now.Date && DateTime.Now.Hour <7 && schedule.ShiftWork=="Prva")
                     || (schedule.Date.Date == DateTime.Now.Date && DateTime.Now.Hour < 14 && schedule.ShiftWork == "Druga")) 
                     ? CheckInStatus.NotAvailableForCheckIn : CheckInStatus.CheckIn;
                 return;

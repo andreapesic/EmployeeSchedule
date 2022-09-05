@@ -160,7 +160,8 @@ namespace EmployeeSchedule.MVC.Controllers
                     };
                     string subject = "Obavestenje o napravljenom rasporedu";
                     string body = "Postovana/i " + schedule.Employee.Name + ",<br/>" +
-                        "Obavestavamo Vas da je kreiran Vas raspored rada za: " + schedule.Date;
+                        "Obavestavamo Vas da je kreiran Vas raspored rada za: " + schedule.Date.ToShortDateString()
+                        +", "+schedule.ShiftWork+" smena.";
 
                     var mailMessage = new MailMessage
                     {
