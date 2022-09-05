@@ -12,6 +12,9 @@ namespace EmployeeSchedule.Data.Entities
         public string Name { get; set; }
         [Required, StringLength(50, ErrorMessage = "Surname must have at least 3 characters", MinimumLength = 3)]
         public string Surname { get; set; }
+
+        public string FullName { get { return Name + " " + Surname; } }
+
         [Required]
         public string Adress { get; set; }
         [Required, StringLength(50, ErrorMessage = "Number must have at least 7 characters", MinimumLength = 7)]
@@ -27,5 +30,7 @@ namespace EmployeeSchedule.Data.Entities
         public bool Administrator { get; set; }
         [Display(Name="City")]
         public string CityName { get; set; }
+
+       
     }
 }

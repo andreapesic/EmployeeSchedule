@@ -1,0 +1,53 @@
+﻿@model IEnumerable<EmployeeSchedule.Data.Entities.EmployeeSummary>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Employee summary</h1>
+
+<div class="table-responsive table-base">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Employee)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfSchedules)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OnTimeCount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LateCount)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Employee.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfSchedules)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OnTimeCount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LateCount)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+
+    @section Styles {
+        <link rel="stylesheet" href="~/css/index.css" />
+    }

@@ -38,6 +38,7 @@ namespace EmployeeSchedule.Repository.Implementation
             return employees;
         }
 
+        
         public async Task<Employee> GetById(int id)
         {
             var employee = await _db.Employee.Include(e => e.Company).SingleOrDefaultAsync(e => e.Id == id);

@@ -10,21 +10,24 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EmployeeSchedule.Data.Helper;
+using System.Linq;
 
 namespace EmployeeSchedule.MVC.Controllers
 {
     public class EmployeeController : Controller
     {
         private readonly IGenericService<Company> _companyService;
+        private readonly IScheduleService _scheduleService;
         private readonly IEmployeeService _employeeService;
         private readonly IMapper _mapper;
         private readonly IWebApiService _apiService;
         private readonly string  key = "b14ca5898a4e4133bbce2ea2315a1916";
 
-        public EmployeeController(IEmployeeService employeeService, IGenericService<Company> companyService, IMapper mapper, IWebApiService apiService)
+        public EmployeeController(IEmployeeService employeeService, IGenericService<Company> companyService, IScheduleService scheduleService, IMapper mapper, IWebApiService apiService)
         {
             _employeeService = employeeService;
             _companyService = companyService;
+            _scheduleService = scheduleService;
             _mapper = mapper;
             _apiService = apiService;
         }
@@ -177,6 +180,31 @@ namespace EmployeeSchedule.MVC.Controllers
             Storage.Instance.LoginEmployee = null;
             Storage.Instance.IsAdmin = LoginCurrentRole.No;
             return View(new EmployeeCreate());
+        }
+
+        public async Task<ActionResult> EmployeeSummary()
+        {
+            var schedules = await _scheduleService.GetAll();
+            var employees = await _employeeService.GetAll();
+
+            List<EmployeeSummary> summaries = new List<EmployeeSummary>();
+
+            foreach (var e in employees)
+            {
+                var schedulesForEmployee = schedules.Where(x => x.Employee.Id == e.Id).ToList();
+                EmployeeSummary es = new EmployeeSummary
+                {
+                    Employee = e,
+                    Schedules = schedulesForEmployee.ToList(),
+                    NumberOfSchedules = schedulesForEmployee.Count(),
+                    OnTimeCount = schedulesForEmployee.Where(x => !x.Late).Count(),
+                    LateCount = schedulesForEmployee.Where(x => x.Late).Count()
+                };
+                summaries.Add(es);
+            }
+
+
+            return View(summaries);
         }
     }
 }
