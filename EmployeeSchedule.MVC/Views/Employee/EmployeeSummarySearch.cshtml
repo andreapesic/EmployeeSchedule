@@ -1,0 +1,26 @@
+﻿@model IEnumerable<EmployeeSchedule.MVC.Models.ViewModel.EmployeeSummaryViewModel>
+
+
+@foreach (var item in Model) {
+        <tr>
+             <td>
+                @Html.DisplayFor(modelItem => item.Employee.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfSchedules)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OnTimeCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LateCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FreeDaysCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoStatisticsCount)
+            </td>
+        </tr>
+}
+   

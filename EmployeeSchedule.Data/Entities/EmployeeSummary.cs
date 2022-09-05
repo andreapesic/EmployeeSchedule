@@ -21,6 +21,7 @@ namespace EmployeeSchedule.Data.Entities
         public int LateCount { get; set; }
 
         public int FreeDaysCount { get; set; }
+        public int NoStatisticsCount { get; set; } 
 
     }
 }

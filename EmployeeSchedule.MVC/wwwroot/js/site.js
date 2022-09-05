@@ -19,6 +19,10 @@ $('#employeeSort').on('click', function (e) {
     var text = $('#employeeSortCriteria').val();
     Sort(text);
 });
+$('#employeeSummarySearch').on('click', function (e) {
+    var text = $('#employeeSearchSummaryText').val();
+    SearchSummary(text);
+});
 
 function Search(text) {
     $.ajax({
@@ -82,6 +86,27 @@ function Sort(criteria) {
         .done(function (result) {
 
             $('#employeeResultInsert').html(result);
+        })
+        .fail(function (xhr) {
+            console.log('error : ' + xhr.status + ' - ' + xhr.statusText + ' - ' + xhr.responseText);
+        })
+}
+function SearchSummary(text) {
+    
+    $.ajax({
+        type: 'GET',
+        url: '/Employee/EmployeeSummarySearch',
+        data: { "criteria": text },
+        cache: false,
+        dataType: "html"
+        //success: function (result) {
+
+        //    $('#employeeResultInsert').html(result);
+        //}
+    })
+        .done(function (result) {
+
+            $('#employeeSummaryResultInsert').html(result);
         })
         .fail(function (xhr) {
             console.log('error : ' + xhr.status + ' - ' + xhr.statusText + ' - ' + xhr.responseText);

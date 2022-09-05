@@ -21,6 +21,9 @@ namespace EmployeeSchedule.MVC.Helper
             CreateMap<ScheduleCreate, Schedule>();
             CreateMap<ScheduleViewModel, Schedule>();
             CreateMap<Schedule, ScheduleViewModel>();
+            CreateMap<EmployeeSummaryViewModel, EmployeeSummary>();
+            CreateMap<EmployeeSummary, EmployeeSummaryViewModel>();
+            
 
         }
     }

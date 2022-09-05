@@ -21,7 +21,7 @@ namespace EmployeeSchedule.MVC.Controllers
         private readonly IEmployeeService _employeeService;
         private readonly IMapper _mapper;
         private readonly IWebApiService _apiService;
-        private readonly string  key = "b14ca5898a4e4133bbce2ea2315a1916";
+        private readonly string key = "b14ca5898a4e4133bbce2ea2315a1916";
 
         public EmployeeController(IEmployeeService employeeService, IGenericService<Company> companyService, IScheduleService scheduleService, IMapper mapper, IWebApiService apiService)
         {
@@ -36,12 +36,12 @@ namespace EmployeeSchedule.MVC.Controllers
         public async Task<ActionResult> Index()
         {
             var employees = await _employeeService.GetAll();
-            
-            
+
+
             return View(_mapper.Map<List<EmployeeViewModel>>(employees));
 
-     
-           
+
+
         }
 
         // GET: EmployeeController/Details/5
@@ -197,8 +197,12 @@ namespace EmployeeSchedule.MVC.Controllers
                     Employee = e,
                     Schedules = schedulesForEmployee.ToList(),
                     NumberOfSchedules = schedulesForEmployee.Count(),
-                    OnTimeCount = schedulesForEmployee.Where(x => !x.Late).Count(),
-                    LateCount = schedulesForEmployee.Where(x => x.Late).Count()
+                    OnTimeCount = schedulesForEmployee.Where(x => !x.Late && !x.CheckInTime.Equals(DateTime.MinValue)).Count(),
+                    LateCount = schedulesForEmployee.Where(x => x.Late).Count(),
+                    NoStatisticsCount = schedulesForEmployee.Where(x => x.CheckInTime.Equals(DateTime.MinValue)).Count(),
+                    FreeDaysCount = schedulesForEmployee.Where(x => x.ShiftWork == "Slobodan dan").Count()
+
+
                 };
                 summaries.Add(es);
             }
@@ -206,5 +210,33 @@ namespace EmployeeSchedule.MVC.Controllers
 
             return View(summaries);
         }
-    }
-}
+        public async Task<ActionResult> EmployeeSummarySearch(string criteria)
+        {
+            var employees = await _employeeService.Search(criteria ?? string.Empty);
+            var schedules = await _scheduleService.GetAll();
+
+            List<EmployeeSummary> summaries = new List<EmployeeSummary>();
+
+            foreach (var e in employees)
+            {
+                var schedulesForEmployee = schedules.Where(x => x.Employee.Id == e.Id).ToList();
+                EmployeeSummary es = new EmployeeSummary
+                {
+                    Employee = e,
+                    Schedules = schedulesForEmployee.ToList(),
+                    NumberOfSchedules = schedulesForEmployee.Count(),
+                    OnTimeCount = schedulesForEmployee.Where(x => !x.Late && !x.CheckInTime.Equals(DateTime.MinValue)).Count(),
+                    LateCount = schedulesForEmployee.Where(x => x.Late).Count(),
+                    NoStatisticsCount = schedulesForEmployee.Where(x => x.CheckInTime.Equals(DateTime.MinValue)).Count(),
+                    FreeDaysCount = schedulesForEmployee.Where(x => x.ShiftWork == "Slobodan dan").Count()
+
+
+                };
+                summaries.Add(es);
+            }
+            return PartialView("EmployeeSummarySearch",_mapper.Map<List<EmployeeSummaryViewModel>>(summaries));
+            
+        }
+    } }
+
+  
